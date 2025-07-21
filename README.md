@@ -67,43 +67,132 @@ DB_HOST=localhost
 DB_PORT=5432
 API Endpoints Implemented
 
-1. POST /api/forms/wheel-specifications
-Description: Submit a new wheel specification.
 
-Sample Request:
+## API Endpoints Implemented
 
-json
+### 1.1. POST `/api/forms/wheel-specifications`
+
+- **URL:** `http://127.0.0.1:8000/api/forms/wheel-specifications`
+- **Method:** `POST`
+- **Headers:** `Content-Type: application/json`
+- **Body:**
+    ```
+    {
+      "formNumber": "WHEEL-2025-001",
+      "submittedBy": "user_id_123",
+      "submittedDate": "2025-07-03",
+      "fields": {
+        "treadDiameterNew": "915 (900-1000)",
+        "lastShopIssueSize": "837 (800-900)",
+        "condemningDia": "825 (800-900)",
+        "wheelGauge": "1600 (+2,-1)",
+        "variationSameAxle": "0.5",
+        "variationSameBogie": "5",
+        "variationSameCoach": "13",
+        "wheelProfile": "29.4 Flange Thickness",
+        "intermediateWWP": "20 TO 28",
+        "bearingSeatDiameter": "130.043 TO 130.068",
+        "rollerBearingOuterDia": "280 (+0.0/-0.035)",
+        "rollerBearingBoreDia": "130 (+0.0/-0.025)",
+        "rollerBearingWidth": "93 (+0/-0.250)",
+        "axleBoxHousingBoreDia": "280 (+0.030/+0.052)",
+        "wheelDiscWidth": "127 (+4/-0)"
+      }
+    }
+    ```
+
+#### Example Success Response
 {
-  "formNumber": "WHEEL-2025-001",
-  "submittedBy": "user_id_123",
-  "submittedDate": "2025-07-03",
-  "fields": {
-    "treadDiameterNew": "915 (900-1000)",
-    "lastShopIssueSize": "837 (800-900)",
-    ...
-  }
+"success": true,
+"message": "Wheel specification submitted successfully.",
+"data": {
+"formNumber": "WHEEL-2025-001",
+"status": "Saved",
+"submittedBy": "user_id_123",
+"submittedDate": "2025-07-03"
 }
-Sample Response:
+}
 
-json
+text
+---
+
+### 1.2. GET `/api/forms/wheel-specifications`
+- **Method:** `GET`
+- **URL Example (all):**
+    ```
+    http://127.0.0.1:8000/api/forms/wheel-specifications
+    ```
+- **URL Example (with filters):**
+    ```
+    http://127.0.0.1:8000/api/forms/wheel-specifications?formNumber=WHEEL-2025-001&submittedBy=user_id_123&submittedDate=2025-07-03
+    ```
+
+#### Example Success Response
 {
-  "success": true,
-  "message": "Wheel specification submitted successfully.",
-  "data": {
-    "formNumber": "WHEEL-2025-001",
-    "status": "Saved",
-    "submittedBy": "user_id_123",
-    "submittedDate": "2025-07-03"
-  }
+"success": true,
+"message": "Filtered wheel specification forms fetched successfully.",
+"data": [
+{
+"formNumber": "WHEEL-2025-001",
+"submittedBy": "user_id_123",
+"submittedDate": "2025-07-03",
+"fields": {
+"treadDiameterNew": "915 (900-1000)",
+"lastShopIssueSize": "837 (800-900)",
+"condemningDia": "825 (800-900)",
+"wheelGauge": "1600 (+2,-1)"
 }
-2. GET /api/forms/wheel-specifications
-Description: Retrieve all or filtered wheel specifications.
+}
+]
+}
 
-Query Params Supported: formNumber, submittedBy, submittedDate
+text
+---
 
-3. POST /api/forms/bogie-checksheet
-Description: Submit a new bogie checksheet.
+### 1.3. POST `/api/forms/bogie-checksheet`
+- **Method:** `POST`
+- **URL:** `http://127.0.0.1:8000/api/forms/bogie-checksheet`
+- **Headers:** `Content-Type: application/json`
+- **Body:**
+    ```
+    {
+      "formNumber": "BOGIE-2025-001",
+      "inspectionBy": "user_id_456",
+      "inspectionDate": "2025-07-03",
+      "bogieDetails": {
+        "bogieNo": "BG1234",
+        "makerYearBuilt": "RDSO/2018",
+        "incomingDivAndDate": "NR / 2025-06-25",
+        "deficitComponents": "None",
+        "dateOfIOH": "2025-07-01"
+      },
+      "bogieChecksheet": {
+        "bogieFrameCondition": "Good",
+        "bolster": "Good",
+        "bolsterSuspensionBracket": "Cracked",
+        "lowerSpringSeat": "Good",
+        "axleGuide": "Worn"
+      },
+      "bmbcChecksheet": {
+        "cylinderBody": "WORN OUT",
+        "pistonTrunnion": "GOOD",
+        "adjustingTube": "DAMAGED",
+        "plungerSpring": "GOOD"
+      }
+    }
+    ```
 
+#### Example Success Response
+{
+"success": true,
+"message": "Bogie checksheet submitted successfully.",
+"data": {
+"formNumber": "BOGIE-2025-001",
+"inspectionBy": "user_id_456",
+"inspectionDate": "2025-07-03",
+"status": "Saved"
+}
+}
 Sample Request/Response: Matches the assignment’s provided structure.
 
 How to Test
